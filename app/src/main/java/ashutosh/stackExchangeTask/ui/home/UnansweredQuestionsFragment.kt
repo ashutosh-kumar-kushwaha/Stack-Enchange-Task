@@ -5,16 +5,23 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import ashutosh.stackExchangeTask.R
+import ashutosh.stackExchangeTask.databinding.FragmentUnansweredQuestionsBinding
 
 class UnansweredQuestionsFragment : Fragment() {
 
+    private var _binding : FragmentUnansweredQuestionsBinding? = null
+    private val binding : FragmentUnansweredQuestionsBinding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_unanswered_questions, container, false)
+        _binding = FragmentUnansweredQuestionsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }
