@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ashutosh.stackExchangeTask.databinding.FragmentTopVotedQuestionsBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TopVotedQuestionsFragment : Fragment() {
 
     private var _binding : FragmentTopVotedQuestionsBinding? = null

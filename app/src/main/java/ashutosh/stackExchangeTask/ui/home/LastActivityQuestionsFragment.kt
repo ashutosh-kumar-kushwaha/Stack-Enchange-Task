@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ashutosh.stackExchangeTask.databinding.FragmentLastActivityQuestionsBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LastActivityQuestionsFragment : Fragment() {
     private var _binding : FragmentLastActivityQuestionsBinding? = null
     private val binding : FragmentLastActivityQuestionsBinding get() = _binding!!

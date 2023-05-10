@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ashutosh.stackExchangeTask.databinding.FragmentHotQuestionsBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HotQuestionsFragment : Fragment() {
     private var _binding : FragmentHotQuestionsBinding? = null
     private val binding : FragmentHotQuestionsBinding get() = _binding!!

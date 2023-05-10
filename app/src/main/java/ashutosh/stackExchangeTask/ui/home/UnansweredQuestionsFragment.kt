@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ashutosh.stackExchangeTask.databinding.FragmentUnansweredQuestionsBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class UnansweredQuestionsFragment : Fragment() {
 
     private var _binding : FragmentUnansweredQuestionsBinding? = null
