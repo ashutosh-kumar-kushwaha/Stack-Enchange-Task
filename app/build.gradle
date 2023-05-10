@@ -63,4 +63,9 @@ dependencies {
     implementation 'com.google.dagger:hilt-android:2.44.2'
     kapt 'com.google.dagger:hilt-compiler:2.44.2'
 
+    implementation "io.coil-kt:coil:2.3.0"
+    implementation 'com.google.android.flexbox:flexbox:3.0.0'
+
+
+
 }

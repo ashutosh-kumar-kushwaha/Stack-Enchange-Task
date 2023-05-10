@@ -5,18 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import ashutosh.stackExchangeTask.databinding.FragmentLastActivityQuestionsBinding
+import ashutosh.stackExchangeTask.databinding.FragmentRecentActivityQuestionsBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LastActivityQuestionsFragment : Fragment() {
-    private var _binding : FragmentLastActivityQuestionsBinding? = null
-    private val binding : FragmentLastActivityQuestionsBinding get() = _binding!!
+class RecentActivityQuestionsFragment : Fragment() {
+    private var _binding : FragmentRecentActivityQuestionsBinding? = null
+    private val binding : FragmentRecentActivityQuestionsBinding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentLastActivityQuestionsBinding.inflate(inflater, container, false)
+        _binding = FragmentRecentActivityQuestionsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
