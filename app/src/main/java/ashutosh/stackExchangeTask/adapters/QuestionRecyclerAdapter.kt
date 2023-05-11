@@ -1,5 +1,6 @@
 package ashutosh.stackExchangeTask.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
@@ -20,7 +21,8 @@ class QuestionRecyclerAdapter : ListAdapter<Question, QuestionRecyclerAdapter.Qu
         fun bind(question: Question){
             binding.nameTxtVw.text = question.owner.display_name
             binding.profilePicImgVw.load(question.owner.profile_image)
-            binding.timeTxtVw.text = getTimeDifference(question.creation_date.toTime())
+            Log.d("Ashu", question.creation_date.toTime())
+//            binding.timeTxtVw.text = getTimeDifference(question.creation_date.toTime())
             binding.questionTxtVw.text = question.title
             binding.votesTxtVw.text = question.score.toString()
             binding.answersTxtVw.text = question.answer_count.toString()
