@@ -33,6 +33,8 @@ class RecentActivityQuestionsFragment : Fragment() {
         binding.lastActivityQuestionsRecyclerView.adapter = questionsRecyclerAdapter
         binding.lastActivityQuestionsRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
+        homeViewModel.getRecentQuestions()
+
         return binding.root
     }
 

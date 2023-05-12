@@ -35,8 +35,6 @@ class HomeFragment : Fragment() {
             tab.text = tabs[position]
         }.attach()
 
-        homeViewModel.getRecentQuestions()
-
         return binding.root
     }
 
