@@ -16,7 +16,7 @@ class HomeFragment : Fragment() {
     private var _binding : FragmentHomeBinding? = null
     private val binding : FragmentHomeBinding get() = _binding!!
 
-    private val tabs = arrayOf("Last Activity", "Hot", "Unanswered", "Top Voted")
+    private val tabs = arrayOf("Recent Activity", "Hot", "Unanswered", "Top Voted")
 
     private val homeViewModel by viewModels<HomeViewModel>()
 
