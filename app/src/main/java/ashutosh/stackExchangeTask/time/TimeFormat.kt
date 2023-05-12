@@ -7,13 +7,10 @@ import java.util.Date
 import java.util.concurrent.TimeUnit
 
 class TimeFormat {
-    fun Int.toTime(): String{
-        return DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault()).format(this)
-    }
 
     fun getTimeDifference(dateString: String): String {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        val date = dateFormat.parse(dateString) ?: return "Incorrect format of date"
+        val date = dateFormat.parse(dateString)
         val now = Date()
         val diffInMillis = now.time - date.time
 
@@ -24,30 +21,38 @@ class TimeFormat {
 
         val minutes = TimeUnit.MILLISECONDS.toMinutes(diffInMillis)
         if (minutes < 60) {
-            return "$minutes minutes ago"
+            return "$minutes ${getPluralSuffix(minutes, "minute")} ago"
         }
 
         val hours = TimeUnit.MILLISECONDS.toHours(diffInMillis)
         if (hours < 24) {
-            return "$hours hours ago"
+            return "$hours ${getPluralSuffix(hours, "hour")} ago"
         }
 
         val days = TimeUnit.MILLISECONDS.toDays(diffInMillis)
         if (days < 7) {
-            return "$days days ago"
+            return "$days ${getPluralSuffix(days, "day")} ago"
         }
 
         val weeks = days / 7
         if (weeks < 4) {
-            return "$weeks weeks ago"
+            return "$weeks ${getPluralSuffix(weeks, "week")} ago"
         }
 
         val months = days / 30
         if (months < 12) {
-            return "$months months ago"
+            return "$months ${getPluralSuffix(months, "month")} ago"
         }
 
         val years = days / 365
-        return "$years years ago"
+        return "$years ${getPluralSuffix(years, "year")} ago"
+    }
+
+    private fun getPluralSuffix(count: Long, singularSuffix: String): String {
+        return if (count == 1L) {
+            singularSuffix
+        } else {
+            "${singularSuffix}s"
+        }
     }
 }

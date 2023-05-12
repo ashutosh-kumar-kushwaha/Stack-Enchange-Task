@@ -1,5 +1,6 @@
 package ashutosh.stackExchangeTask.adapters
 
+import android.icu.util.LocaleData
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,12 +10,16 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ashutosh.stackExchangeTask.databinding.LayoutQuestionBinding
 import ashutosh.stackExchangeTask.models.Question
+import ashutosh.stackExchangeTask.time.TimeFormat
 import coil.load
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import java.text.DateFormat
 import java.text.SimpleDateFormat
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 import java.util.Date
 import java.util.Locale
 import java.util.concurrent.TimeUnit
@@ -26,7 +31,7 @@ class QuestionRecyclerAdapter : ListAdapter<Question, QuestionRecyclerAdapter.Qu
             binding.nameTxtVw.text = question.owner.display_name
             binding.profilePicImgVw.load(question.owner.profile_image)
             Log.d("Ashu", question.creation_date.toTime())
-//            binding.timeTxtVw.text = getTimeDifference(question.creation_date.toTime())
+            binding.timeTxtVw.text = TimeFormat().getTimeDifference(question.creation_date.toTime())
             val htmlSpannedString = HtmlCompat.fromHtml(question.title, HtmlCompat.FROM_HTML_MODE_LEGACY)
             binding.questionTxtVw.text = htmlSpannedString
             binding.votesTxtVw.text = question.score.toString()
@@ -41,47 +46,7 @@ class QuestionRecyclerAdapter : ListAdapter<Question, QuestionRecyclerAdapter.Qu
         }
 
         private fun Int.toTime(): String{
-            return DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault()).format(this)
-        }
-
-        private fun getTimeDifference(dateString: String): String {
-            val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            val date = dateFormat.parse(dateString) ?: return "Incorrect format of date"
-            val now = Date()
-            val diffInMillis = now.time - date.time
-
-            val seconds = TimeUnit.MILLISECONDS.toSeconds(diffInMillis)
-            if (seconds < 60) {
-                return "just now"
-            }
-
-            val minutes = TimeUnit.MILLISECONDS.toMinutes(diffInMillis)
-            if (minutes < 60) {
-                return "$minutes minutes ago"
-            }
-
-            val hours = TimeUnit.MILLISECONDS.toHours(diffInMillis)
-            if (hours < 24) {
-                return "$hours hours ago"
-            }
-
-            val days = TimeUnit.MILLISECONDS.toDays(diffInMillis)
-            if (days < 7) {
-                return "$days days ago"
-            }
-
-            val weeks = days / 7
-            if (weeks < 4) {
-                return "$weeks weeks ago"
-            }
-
-            val months = days / 30
-            if (months < 12) {
-                return "$months months ago"
-            }
-
-            val years = days / 365
-            return "$years years ago"
+            return SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date(this.toLong()*1000))
         }
     }
 
