@@ -3,12 +3,16 @@ package ashutosh.stackExchangeTask.adapters
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ashutosh.stackExchangeTask.databinding.LayoutQuestionBinding
 import ashutosh.stackExchangeTask.models.Question
 import coil.load
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -23,11 +27,17 @@ class QuestionRecyclerAdapter : ListAdapter<Question, QuestionRecyclerAdapter.Qu
             binding.profilePicImgVw.load(question.owner.profile_image)
             Log.d("Ashu", question.creation_date.toTime())
 //            binding.timeTxtVw.text = getTimeDifference(question.creation_date.toTime())
-            binding.questionTxtVw.text = question.title
+            val htmlSpannedString = HtmlCompat.fromHtml(question.title, HtmlCompat.FROM_HTML_MODE_LEGACY)
+            binding.questionTxtVw.text = htmlSpannedString
             binding.votesTxtVw.text = question.score.toString()
             binding.answersTxtVw.text = question.answer_count.toString()
             binding.viewsTxtVw.text = question.view_count.toString()
             binding.tagsRecyclerVw.adapter = TagsRecyclerAdapter(question.tags)
+            val layoutManager = FlexboxLayoutManager(binding.root.context)
+            layoutManager.flexDirection = FlexDirection.ROW
+            layoutManager.justifyContent = JustifyContent.FLEX_START
+            binding.tagsRecyclerVw.layoutManager = layoutManager
+
         }
 
         private fun Int.toTime(): String{
