@@ -39,14 +39,7 @@ class TopVotedQuestionsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         homeViewModel.topVotedQuestionsResponse.observe(viewLifecycleOwner){
-            when(it){
-                is NetworkResult.Success -> {
-                    questionsRecyclerAdapter.submitList(it.data?.items)
-                    Log.d("Ashu", it.data?.items.toString())
-                }
-                is NetworkResult.Error -> {}
-                is NetworkResult.Loading -> {}
-            }
+            questionsRecyclerAdapter.submitData(lifecycle, it)
         }
 
     }

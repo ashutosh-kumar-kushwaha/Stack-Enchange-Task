@@ -1,12 +1,11 @@
 package ashutosh.stackExchangeTask.adapters
 
-import android.icu.util.LocaleData
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.text.HtmlCompat
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ashutosh.stackExchangeTask.databinding.LayoutQuestionBinding
 import ashutosh.stackExchangeTask.models.Question
@@ -15,16 +14,11 @@ import coil.load
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
-import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.ZoneOffset
 import java.util.Date
 import java.util.Locale
-import java.util.concurrent.TimeUnit
 
-class QuestionRecyclerAdapter : ListAdapter<Question, QuestionRecyclerAdapter.QuestionsViewHolder>(DiffUtil()) {
+class QuestionRecyclerAdapter : PagingDataAdapter<Question, QuestionRecyclerAdapter.QuestionsViewHolder>(DiffUtil()) {
 
     inner class QuestionsViewHolder(private val binding: LayoutQuestionBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(question: Question){
@@ -66,6 +60,7 @@ class QuestionRecyclerAdapter : ListAdapter<Question, QuestionRecyclerAdapter.Qu
     }
 
     override fun onBindViewHolder(holder: QuestionsViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        val item = getItem(position)
+        if(item != null) holder.bind(item)
     }
 }

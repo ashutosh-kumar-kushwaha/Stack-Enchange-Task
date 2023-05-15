@@ -56,5 +56,14 @@
                 app:layout_constraintTop_toBottomOf="@id/tab_layout"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:id="@+id/questions_recycler_vw"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="0dp"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/tab_layout"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"/>-->
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

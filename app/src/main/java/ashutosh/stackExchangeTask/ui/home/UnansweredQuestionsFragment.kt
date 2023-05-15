@@ -19,7 +19,7 @@ class UnansweredQuestionsFragment : Fragment() {
     private var _binding : FragmentUnansweredQuestionsBinding? = null
     private val binding : FragmentUnansweredQuestionsBinding get() = _binding!!
 
-    private val homeViewModel by viewModels<HomeViewModel>()
+    private val homeViewModel by viewModels<UnansweredViewModel>()
 
     private val questionsRecyclerAdapter = QuestionRecyclerAdapter()
     override fun onCreateView(
@@ -31,7 +31,7 @@ class UnansweredQuestionsFragment : Fragment() {
         binding.unansweredQuestionsRecyclerView.adapter = questionsRecyclerAdapter
         binding.unansweredQuestionsRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-        homeViewModel.getUnansweredQuestions()
+//        homeViewModel.getUnansweredQuestions()
 
         return binding.root
     }
@@ -39,13 +39,7 @@ class UnansweredQuestionsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         homeViewModel.unansweredQuestionsResponse.observe(viewLifecycleOwner){
-            when(it){
-                is NetworkResult.Success -> {
-                    questionsRecyclerAdapter.submitList(it.data?.items)
-                }
-                is NetworkResult.Error -> {}
-                is NetworkResult.Loading -> {}
-            }
+            questionsRecyclerAdapter.submitData(lifecycle, it)
         }
     }
 
