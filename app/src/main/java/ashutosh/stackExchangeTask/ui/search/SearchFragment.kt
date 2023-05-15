@@ -10,25 +10,38 @@ import android.view.inputmethod.InputMethodManager
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import ashutosh.stackExchangeTask.adapters.QuestionRecyclerAdapter
 import ashutosh.stackExchangeTask.bottomSheet.FilterBottomSheet
 import ashutosh.stackExchangeTask.databinding.FragmentSearchBinding
 import ashutosh.stackExchangeTask.interfaces.TagListener
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.internal.ViewUtils.showKeyboard
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class SearchFragment : Fragment() {
 
     private var _binding : FragmentSearchBinding? = null
     private val binding : FragmentSearchBinding get() = _binding!!
     private val searchViewModel by viewModels<SearchViewModel>()
     private lateinit var filterBottomSheet : FilterBottomSheet
+    private lateinit var questionRecyclerAdapter : QuestionRecyclerAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
+
+        binding.viewModel = searchViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
+        questionRecyclerAdapter = QuestionRecyclerAdapter()
+
+        binding.questionsRecyclerVw.adapter = questionRecyclerAdapter
+        binding.questionsRecyclerVw.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
 
         val tagListener = object: TagListener{
             override fun tags(tags: String) {
@@ -55,32 +68,21 @@ class SearchFragment : Fragment() {
         val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
 
-//        binding.searchView.postDelayed({
-//            binding.searchView.requestFocus()
-//            showKeyboard(requireContext(), binding.searchView)
-//        }, 300)
-
-//        binding.searchView.setOnFocusChangeListener { v, hasFocus ->
-//            if (hasFocus) {
-//                Log.d("TAG", "EditText focused")
-//            } else {
-//                Log.d("TAG", "EditText lost focus")
-//            }
-//        }
-
-        binding.searchView.addTextChangedListener {
-
-        }
-
         binding.filterBtn.setOnClickListener {
             filterBottomSheet.show(parentFragmentManager, "Filter Bottom Sheet")
         }
 
-
-
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        searchViewModel.searchResponse.observe(viewLifecycleOwner){
+//            Log.d("Ashu", it)
+            questionRecyclerAdapter.submitData(lifecycle, it)
+
+        }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

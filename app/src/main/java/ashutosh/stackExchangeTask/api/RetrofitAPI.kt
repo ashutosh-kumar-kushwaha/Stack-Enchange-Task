@@ -13,6 +13,6 @@ suspend fun getQuestions(@Query("sort") sortBy: String, @Query("page") page: Int
     suspend fun getUnansweredQuestions(@Query("page") page: Int, @Query("pagesize") pageSize : Int): QuestionsResponse
 
     @GET("/2.3/search?order=desc&sort=activity&site=stackoverflow")
-    suspend fun search(@Query("order") order: String, @Query("sort") sortBy: String, @Query("page") page: Int, @Query("pagesize") pageSize: Int, tagged: String): QuestionsResponse
+    suspend fun search(@Query("order") order: String, @Query("sort") sortBy: String, @Query("page") page: Int, @Query("pagesize") pageSize: Int, @Query("tagged") tagged: String, @Query("intitle") query: String): QuestionsResponse
 
 }

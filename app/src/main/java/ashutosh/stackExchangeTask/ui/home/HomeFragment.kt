@@ -25,7 +25,7 @@ class HomeFragment : Fragment() {
 
     private val homeViewModel by viewModels<HomeViewModel>()
 
-    val questionRecyclerAdapter = QuestionRecyclerAdapter()
+    private val questionRecyclerAdapter = QuestionRecyclerAdapter()
 
     private lateinit var questionsViewPagerAdapter: QuestionsViewPagerAdapter
     override fun onCreateView(
@@ -34,7 +34,7 @@ class HomeFragment : Fragment() {
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        questionsViewPagerAdapter = QuestionsViewPagerAdapter(this)
+//        questionsViewPagerAdapter = QuestionsViewPagerAdapter(this)
 
 //        binding.viewPager.adapter = questionsViewPagerAdapter
 
