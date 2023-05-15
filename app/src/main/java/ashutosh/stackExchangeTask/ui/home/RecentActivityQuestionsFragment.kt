@@ -27,14 +27,15 @@ class RecentActivityQuestionsFragment : Fragment() {
     ): View? {
         _binding = FragmentRecentActivityQuestionsBinding.inflate(inflater, container, false)
 
-        binding.lastActivityQuestionsRecyclerView.adapter = questionsRecyclerAdapter
-        binding.lastActivityQuestionsRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.lastActivityQuestionsRecyclerView.adapter = questionsRecyclerAdapter
+        binding.lastActivityQuestionsRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
         homeViewModel.recentActivityQuestionsResponse.observe(viewLifecycleOwner){
             questionsRecyclerAdapter.submitData(lifecycle, it)
         }

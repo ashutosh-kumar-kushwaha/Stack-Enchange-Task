@@ -10,5 +10,4 @@ import javax.inject.Inject
 @HiltViewModel
 class UnansweredViewModel @Inject constructor(private val unansweredRepository: UnansweredRepository) : ViewModel() {
     val unansweredQuestionsResponse get() = unansweredRepository.getUnansweredQuestions().cachedIn(viewModelScope)
-
 }

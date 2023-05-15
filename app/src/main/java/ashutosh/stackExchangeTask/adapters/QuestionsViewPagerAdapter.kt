@@ -9,7 +9,7 @@ import ashutosh.stackExchangeTask.ui.home.UnansweredQuestionsFragment
 
 class QuestionsViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment){
     override fun getItemCount(): Int {
-        return 2
+        return 1
     }
 
     override fun createFragment(position: Int): Fragment {

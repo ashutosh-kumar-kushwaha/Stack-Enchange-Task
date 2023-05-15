@@ -7,8 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import ashutosh.stackExchangeTask.bottomSheet.FilterBottomSheet
 import ashutosh.stackExchangeTask.databinding.FragmentSearchBinding
+import ashutosh.stackExchangeTask.interfaces.TagListener
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.internal.ViewUtils.showKeyboard
 
 
@@ -16,12 +21,23 @@ class SearchFragment : Fragment() {
 
     private var _binding : FragmentSearchBinding? = null
     private val binding : FragmentSearchBinding get() = _binding!!
+    private val searchViewModel by viewModels<SearchViewModel>()
+    private lateinit var filterBottomSheet : FilterBottomSheet
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
+
+        val tagListener = object: TagListener{
+            override fun tags(tags: String) {
+                searchViewModel.tags = tags
+                Log.d("Ashu", searchViewModel.tags)
+            }
+
+        }
+        filterBottomSheet = FilterBottomSheet(tagListener, searchViewModel.tags)
 
 //        val searchText = binding.searchView.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
 //        binding.searchView.isFocusable = true
@@ -51,6 +67,14 @@ class SearchFragment : Fragment() {
 //                Log.d("TAG", "EditText lost focus")
 //            }
 //        }
+
+        binding.searchView.addTextChangedListener {
+
+        }
+
+        binding.filterBtn.setOnClickListener {
+            filterBottomSheet.show(parentFragmentManager, "Filter Bottom Sheet")
+        }
 
 
 

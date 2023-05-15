@@ -8,5 +8,5 @@ import ashutosh.stackExchangeTask.paging.UnansweredQuestionsPagingSource
 import javax.inject.Inject
 
 class UnansweredRepository @Inject constructor(private val retrofitAPI: RetrofitAPI) {
-    fun getUnansweredQuestions() = Pager(config = PagingConfig(10, 50), pagingSourceFactory = { UnansweredQuestionsPagingSource(retrofitAPI) }).liveData
+    fun getUnansweredQuestions() = Pager(config = PagingConfig(20, 100), pagingSourceFactory = { UnansweredQuestionsPagingSource(retrofitAPI) }).liveData
 }

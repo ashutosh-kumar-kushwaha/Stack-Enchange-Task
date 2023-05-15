@@ -28,9 +28,6 @@ class UnansweredQuestionsFragment : Fragment() {
     ): View? {
         _binding = FragmentUnansweredQuestionsBinding.inflate(inflater, container, false)
 
-        binding.unansweredQuestionsRecyclerView.adapter = questionsRecyclerAdapter
-        binding.unansweredQuestionsRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-
 //        homeViewModel.getUnansweredQuestions()
 
         return binding.root
@@ -38,6 +35,11 @@ class UnansweredQuestionsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+        binding.unansweredQuestionsRecyclerView.adapter = questionsRecyclerAdapter
+        binding.unansweredQuestionsRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
         homeViewModel.unansweredQuestionsResponse.observe(viewLifecycleOwner){
             questionsRecyclerAdapter.submitData(lifecycle, it)
         }
