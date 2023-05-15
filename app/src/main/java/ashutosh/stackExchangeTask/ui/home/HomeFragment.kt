@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import ashutosh.stackExchangeTask.R
 import ashutosh.stackExchangeTask.adapters.QuestionsViewPagerAdapter
 import ashutosh.stackExchangeTask.databinding.FragmentHomeBinding
 import com.google.android.material.tabs.TabLayoutMediator
@@ -34,6 +36,10 @@ class HomeFragment : Fragment() {
         TabLayoutMediator(binding.tabLayout, binding.viewPager){tab, position ->
             tab.text = tabs[position]
         }.attach()
+
+        binding.searchTxtVw.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
+        }
 
         return binding.root
     }
