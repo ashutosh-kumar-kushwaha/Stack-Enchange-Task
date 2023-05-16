@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -109,12 +110,17 @@ class SearchFragment : Fragment() {
             when(it){
                 is NetworkResult.Success -> {
                     questionRecyclerAdapter.submitList(it.data?.items)
+                    binding.progressBar.visibility = View.GONE
+                    binding.questionsRecyclerVw.visibility = View.VISIBLE
                 }
                 is NetworkResult.Error -> {
-
+                    binding.progressBar.visibility = View.GONE
+                    binding.questionsRecyclerVw.visibility = View.VISIBLE
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }
                 is NetworkResult.Loading -> {
-
+                    binding.progressBar.visibility = View.VISIBLE
+                    binding.questionsRecyclerVw.visibility = View.GONE
                 }
             }
         }
