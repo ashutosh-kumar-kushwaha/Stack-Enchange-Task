@@ -1,6 +1,7 @@
 package ashutosh.stackExchangeTask.ui.home
 
 import android.os.Bundle
+import android.os.RecoverySystem
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,24 +11,29 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import ashutosh.stackExchangeTask.R
 import ashutosh.stackExchangeTask.adapters.QuestionRecyclerAdapter
-import ashutosh.stackExchangeTask.adapters.QuestionsViewPagerAdapter
+import ashutosh.stackExchangeTask.api.NetworkResult
+import ashutosh.stackExchangeTask.bottomSheet.FilterBottomSheet
 import ashutosh.stackExchangeTask.databinding.FragmentHomeBinding
-import com.google.android.material.tabs.TabLayoutMediator
+import ashutosh.stackExchangeTask.interfaces.QuestionClickListener
+import ashutosh.stackExchangeTask.interfaces.TagListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
-    private var _binding : FragmentHomeBinding? = null
-    private val binding : FragmentHomeBinding get() = _binding!!
+    private var _binding: FragmentHomeBinding? = null
+    private val binding: FragmentHomeBinding get() = _binding!!
 
-//    private val tabs = arrayOf("Recent Activity", "Hot", "Unanswered", "Top Voted")
+    //    private val tabs = arrayOf("Recent Activity", "Hot", "Unanswered", "Top Voted")
     private val tabs = arrayOf("Recent Activity")
 
     private val homeViewModel by viewModels<HomeViewModel>()
 
-    private val questionRecyclerAdapter = QuestionRecyclerAdapter()
+    private lateinit var questionRecyclerAdapter: QuestionRecyclerAdapter
 
-    private lateinit var questionsViewPagerAdapter: QuestionsViewPagerAdapter
+
+    private lateinit var filterBottomSheet: FilterBottomSheet
+
+    //    private lateinit var questionsViewPagerAdapter: QuestionsViewPagerAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,12 +50,36 @@ class HomeFragment : Fragment() {
 
 //        binding.viewPager.offscreenPageLimit = 2
 
+        val questionClickListener = object : QuestionClickListener {
+            override fun onClick(link: String) {
+                val bundle = Bundle()
+                bundle.putString("link", link)
+                findNavController().navigate(R.id.action_homeFragment_to_webViewFragment, bundle)
+            }
+        }
+
+        questionRecyclerAdapter = QuestionRecyclerAdapter(questionClickListener)
         binding.questionsRecyclerVw.adapter = questionRecyclerAdapter
-        binding.questionsRecyclerVw.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding.questionsRecyclerVw.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
 
         binding.searchTxtVw.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
+        }
+
+        val tagListener = object : TagListener {
+            override fun tags(tags: String) {
+                homeViewModel.tags = tags
+                homeViewModel.getRecentQuestions()
+            }
+        }
+        filterBottomSheet = FilterBottomSheet(tagListener)
+
+        homeViewModel.getRecentQuestions()
+
+        binding.filterBtn.setOnClickListener {
+            filterBottomSheet.show(parentFragmentManager, "Filter Bottom Sheet")
         }
 
         return binding.root
@@ -57,8 +87,20 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        homeViewModel.recentActivityQuestionsResponse.observe(viewLifecycleOwner){
-            questionRecyclerAdapter.submitData(lifecycle, it)
+        homeViewModel.recentActivityQuestionsResponse.observe(viewLifecycleOwner) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    questionRecyclerAdapter.submitList(it.data?.items)
+                }
+
+                is NetworkResult.Error -> {
+
+                }
+
+                is NetworkResult.Loading -> {
+
+                }
+            }
         }
     }
 

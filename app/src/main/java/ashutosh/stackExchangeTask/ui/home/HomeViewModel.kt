@@ -10,32 +10,16 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val homeRepository: HomeRepository) : ViewModel() {
-    val recentActivityQuestionsResponse get() = homeRepository.getRecentActivityQuestions().cachedIn(viewModelScope)
-    val unansweredQuestionsResponse get() = homeRepository.getUnansweredQuestions().cachedIn(viewModelScope)
-    val topVotedQuestionsResponse get() = homeRepository.getTopVotedQuestions().cachedIn(viewModelScope)
-    val hotQuestionsResponse get() = homeRepository.getHotQuestions().cachedIn(viewModelScope)
+
+    var tags = ""
+
+    val recentActivityQuestionsResponse get() = homeRepository.recentActivityQuestionsResponse
+//    val recentActivityQuestionsResponse get() = homeRepository.getRecentActivityQuestions(tags).cachedIn(viewModelScope)
 
     fun getRecentQuestions(){
         viewModelScope.launch {
-            homeRepository.getRecentActivityQuestions()
+            homeRepository.getRecentActivityQuestions(tags)
         }
     }
 
-    fun getUnansweredQuestions(){
-        viewModelScope.launch {
-            homeRepository.getUnansweredQuestions()
-        }
-    }
-
-    fun getTopVotedQuestions(){
-        viewModelScope.launch {
-            homeRepository.getTopVotedQuestions()
-        }
-    }
-
-    fun getHotQuestions(){
-        viewModelScope.launch {
-            homeRepository.getHotQuestions()
-        }
-    }
 }

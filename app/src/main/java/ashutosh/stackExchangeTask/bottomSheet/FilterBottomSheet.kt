@@ -16,7 +16,7 @@ import ashutosh.stackExchangeTask.interfaces.TagListener
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
 
-class FilterBottomSheet(private val tagListener: TagListener, private val initialTags: String) : BottomSheetDialogFragment() {
+class FilterBottomSheet(private val tagListener: TagListener) : BottomSheetDialogFragment() {
 
     private var _binding : BottomSheetFilterBinding? = null
     private val binding : BottomSheetFilterBinding get() = _binding!!

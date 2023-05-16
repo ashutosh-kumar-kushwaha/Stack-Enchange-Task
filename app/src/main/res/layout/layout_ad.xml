@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<!--    <com.google.android.gms.ads.AdView-->
+<!--    android:layout_marginTop="16dp"-->
+<!--        xmlns:ads="http://schemas.android.com/apk/res-auto"-->
+<!--        android:id="@+id/ad_view"-->
+<!--        ads:adSize="BANNER"-->
+<!--        ads:adUnitId="ca-app-pub-2615965828528434/6022888141"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content" />-->
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ad"
+        android:gravity="center"
+        android:padding="24dp"
+        android:textSize="16sp"
+        android:fontFamily="@font/poppins_semibold"
+        android:background="#808080"
+        android:textColor="@color/white"/>
+</layout>
